@@ -1,4 +1,6 @@
-export const RoleCard = ({ role, message, onClick }) => {
+import { Children } from "react";
+
+export const RoleCard = ({ role, message, onClick, children }) => {
   return (
     <div
       className="card"
@@ -9,6 +11,7 @@ export const RoleCard = ({ role, message, onClick }) => {
       }}
     >
       <h3 style={{ color: '#2e7d32', marginBottom: '15px' }}>{role}</h3>
+      {children}
       <p>{message}</p>
     </div>
   );
