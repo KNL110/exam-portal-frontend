@@ -1,12 +1,12 @@
 import { Children } from "react";
 
-export const RoleCard = ({ role, message, onClick, children }) => {
+export const RoleCard = ({ role, message, onClick, children, textAlign="center" }) => {
   return (
     <div
       className="card"
       onClick={onClick}
       style={{
-        textAlign: 'center',
+        textAlign: {textAlign},
         cursor: onClick ? 'pointer' : 'default'
       }}
     >

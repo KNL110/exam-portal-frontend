@@ -15,7 +15,7 @@ export const StudentDashboard = () => {
                         <h2 className="card-title">Student Dashboard</h2>
                     </div>
                     <div class="grid grid-2">
-                        <RoleCard role="Take Exam">
+                        <RoleCard role="Take Exam" center="left">
                             <div class="form-group">
                                 <label class="form-label">Enter Exam Code</label>
                                 <input type="text" class="form-input" id="studentExamCode" placeholder="Enter exam code"/>
