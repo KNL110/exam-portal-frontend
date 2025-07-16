@@ -3,11 +3,16 @@ import React from 'react'
 import { Navbar } from '../components/Navbar'
 import { SiteCard } from '../components/SiteCard'
 import { RoleCard } from '../components/RoleCard'
+import { Button } from '../components/Button'
 
 export const Home = () => {
     return (
         <>
-            <Navbar />
+            <Navbar>
+                <Button className="btn btn-primary" onclick="showLogin()">
+                    Register
+                </Button>
+            </Navbar>
             <SiteCard>
                 <div className='card'>
                     <div class="card-header">

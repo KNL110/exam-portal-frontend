@@ -1,13 +1,13 @@
 import React from 'react';
 // import "./navbar.css";
 
-export const Navbar = () => {
+export const Navbar = ({children}) => {
     return (
         <div className="header">
             <div className="header-content">
                 <div className="logo">Goa Testing Agency</div>
                 <div className="nav-buttons">
-                    <button className="btn btn-primary" onclick="showLogin()">Register</button>
+                    {children}
                 </div>
             </div>
         </div>
