@@ -1,11 +1,15 @@
 import React from 'react'
-// import "../styles/home.css"
+import "../styles/home.css"
 import { Navbar } from '../components/Navbar'
+import { PortalCard } from '../components/PortalCard'
 
 export const Home = () => {
     return (
         <>
-        <Navbar/>
+            <Navbar />
+            <PortalCard>
+                
+            </PortalCard>
         </>
     )
 }
