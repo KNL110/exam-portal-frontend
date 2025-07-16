@@ -1,11 +1,13 @@
-export const SiteCard = ({ children }) => {
-    return (
-        <div className="container">
-            <div id="loginPage" className="main-content"
-                style={{ "margin-top": "50px" }}>
-                {children}
-            </div>
-        </div>
-    );
+export const SiteCard = ({ children, id }) => {
+  const styles = {
+    marginTop: '50px'
+  };
 
-}
+  return (
+    <div className="container">
+      <div id={id} style={styles}>
+        {children}
+      </div>
+    </div>
+  );
+};

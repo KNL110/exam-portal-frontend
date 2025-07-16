@@ -1,10 +1,16 @@
-import React from 'react'
+export const RoleCard = ({ role, message, onClick }) => {
+  return (
+    <div
+      className="card"
+      onClick={onClick}
+      style={{
+        textAlign: 'center',
+        cursor: onClick ? 'pointer' : 'default'
+      }}
+    >
+      <h3 style={{ color: '#2e7d32', marginBottom: '15px' }}>{role}</h3>
+      <p>{message}</p>
+    </div>
+  );
+};
 
-export const RoleCard = (props) => {
-    return (
-        <div class="card" style={{"text-align": "center","cursor": "pointer"}} onclick="showStudentView()">
-            <h3 style={{"color": "#2e7d32", "margin-bottom": "15px"}}>{props.role}</h3>
-            <p>{props.message}</p>
-        </div>
-    )
-}
