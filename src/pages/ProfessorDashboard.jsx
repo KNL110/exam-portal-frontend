@@ -2,12 +2,13 @@ import React from 'react'
 import { Navbar } from '../components/Navbar'
 import { SiteCard } from '../components/SiteCard'
 import { Button } from '../components/Button'
+import ProfileMenu from '../components/ProfileMenu'
 
 export const ProfessorDashboard = () => {
     return (
         <>
             <Navbar>
-
+                <ProfileMenu />
             </Navbar>
             <SiteCard id="professorDashboard">
                 <div className='card'>
