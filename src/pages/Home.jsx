@@ -35,6 +35,9 @@ export const Home = () => {
                             onClick={() => navigate("/plogin")}
                         />
                     </div>
+                    <p style={{ marginBottom: '30px', color: '#666' }}>
+                        New here? Make sure you register to take exams! or conduct one
+                    </p>
                 </div>
             </SiteCard>
         </>
