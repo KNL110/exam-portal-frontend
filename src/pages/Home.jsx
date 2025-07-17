@@ -11,11 +11,11 @@ export const Home = () => {
     return (
         <>
             <Navbar>
-                <Button className="btn btn-primary" onclick="showLogin()">
+                <Button className="btn btn-primary">
                     Register
                 </Button>
             </Navbar>
-            <SiteCard id="loginPage" show={true}>
+            <SiteCard id="loginPage">
                 <div className='card'>
                     <div class="card-header">
                         <h2 class="card-title">Welcome to Goa Testing Agency</h2>
@@ -35,9 +35,6 @@ export const Home = () => {
                             onClick={() => navigate("/plogin")}
                         />
                     </div>
-                    <p style={{ marginBottom: '30px', color: '#666' }}>
-                        New here? Make sure you register to take exams! or conduct one
-                    </p>
                 </div>
             </SiteCard>
         </>

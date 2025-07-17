@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, User, Lock, Mail } from 'lucide-react';
 import '../login.css';
 
 export default function LoginPage({role}) {
-    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -58,18 +56,9 @@ export default function LoginPage({role}) {
 
     return (
         <div className="login-container">
-            <div className="bg-pattern">
-                <div className="floating-orb orb-1"></div>
-                <div className="floating-orb orb-2"></div>
-                <div className="floating-orb orb-3"></div>
-            </div>
-
             <div className="login-wrapper">
                 <div className="login-card">
                     <div className="login-header">
-                        <div className="logo-container">
-                            <User className="logo-icon" />
-                        </div>
                         <h1 className="login-title">Welcome Back</h1>
                         <p className="login-subtitle">Sign in to your account</p>
                     </div>
@@ -80,9 +69,6 @@ export default function LoginPage({role}) {
                                 Email Address
                             </label>
                             <div className="input-wrapper">
-                                <div className="input-icon">
-                                    <Mail className="icon" />
-                                </div>
                                 <input
                                     type="email"
                                     id="email"
@@ -100,11 +86,8 @@ export default function LoginPage({role}) {
                                 Password
                             </label>
                             <div className="input-wrapper">
-                                <div className="input-icon">
-                                    <Lock className="icon" />
-                                </div>
                                 <input
-                                    type={showPassword ? 'text' : 'password'}
+                                    type='password'
                                     id="password"
                                     name="password"
                                     value={formData.password}
@@ -113,13 +96,6 @@ export default function LoginPage({role}) {
                                     placeholder="Enter your password"
                                     required
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="password-toggle"
-                                >
-                                    {showPassword ? <EyeOff className="icon" /> : <Eye className="icon" />}
-                                </button>
                             </div>
                         </div>
                         <button

@@ -21,26 +21,26 @@ const router = createBrowserRouter([
     },
     {
         path: "/student",
-        element: <StudentLayout/>,
-        children:[
+        element: <StudentLayout />,
+        children: [
             {
-                index: true,
-                element: <StudentDashboard/>
+                path: "",
+                element: <StudentDashboard />
             },
             {
                 path: "examHistory",
-                element: <ExamHistory/>
+                element: <ExamHistory />
             },
             {
-                path: "/examHistory/response",
-                element: <Response/>
+                path: "examHistory/response",
+                element: <Response />
             }
         ]
     },
     {
         path: "/plogin",
         element: <ProfessorDashboard />
-        
+
     }
 ]);
 createRoot(document.getElementById('root')).render(

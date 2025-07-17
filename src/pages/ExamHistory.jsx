@@ -12,26 +12,21 @@ export const ExamHistory = () => {
     ];
     const navigate = useNavigate();
     return (
-        <>
-            <Navbar>
-                <ProfileMenu />
-            </Navbar>
-            <SiteCard id="studentHistoryPage">
-                <div className="card">
-                    <div className="card-header">
-                        <h2 className="card-title">My Exam History</h2>
-                    </div>
-                    <div id="studentHistoryList">
-                        <HistoryCard
-                            title={studentHistory[0].title}
-                            marks={studentHistory[0].marks}
-                            totalMarks={studentHistory[0].totalMarks}
-                            onClick={()=> navigate("/login/examHistory/response")}
-                        />
-                    </div>
-                    <Button type="button" className="btn" onClick={() => navigate("/login")}>Back to Dashboard</Button>
+        <SiteCard id="studentHistoryPage">
+            <div className="card">
+                <div className="card-header">
+                    <h2 className="card-title">My Exam History</h2>
                 </div>
-            </SiteCard>
-        </>
+                <div id="studentHistoryList">
+                    <HistoryCard
+                        title={studentHistory[0].title}
+                        marks={studentHistory[0].marks}
+                        totalMarks={studentHistory[0].totalMarks}
+                        onClick={() => navigate("/student/examHistory/response")}
+                    />
+                </div>
+                <Button type="button" className="btn" onClick={() => navigate("/student")}>Back to Dashboard</Button>
+            </div>
+        </SiteCard>
     )
 }
