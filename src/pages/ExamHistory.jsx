@@ -26,6 +26,7 @@ export const ExamHistory = () => {
                             title={studentHistory[0].title}
                             marks={studentHistory[0].marks}
                             totalMarks={studentHistory[0].totalMarks}
+                            onClick={()=> navigate("/login/examHistory/response")}
                         />
                     </div>
                     <Button type="button" className="btn" onClick={() => navigate("/login")}>Back to Dashboard</Button>
