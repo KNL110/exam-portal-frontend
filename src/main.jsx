@@ -7,6 +7,8 @@ import { StudentDashboard } from './pages/StudentDashboard.jsx';
 import { ProfessorDashboard } from './pages/ProfessorDashboard.jsx';
 import { ExamHistory } from './pages/ExamHistory.jsx';
 import { Response } from './pages/Response.jsx';
+import LoginPage from './pages/Login.jsx';
+import { StudentLayout } from './pages/StudentLayout.jsx';
 
 const router = createBrowserRouter([
     {
@@ -15,19 +17,30 @@ const router = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <StudentDashboard />
+        element: <LoginPage />
+    },
+    {
+        path: "/student",
+        element: <StudentLayout/>,
+        children:[
+            {
+                index: true,
+                element: <StudentDashboard/>
+            },
+            {
+                path: "examHistory",
+                element: <ExamHistory/>
+            },
+            {
+                path: "/examHistory/response",
+                element: <Response/>
+            }
+        ]
     },
     {
         path: "/plogin",
         element: <ProfessorDashboard />
-    },
-    {
-        path: "/login/examHistory",
-        element: <ExamHistory />
-    },
-    {
-        path: "/login/examHistory/response",
-        element: <Response />
+        
     }
 ]);
 createRoot(document.getElementById('root')).render(
