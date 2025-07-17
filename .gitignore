@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-
+gta_frontend.html
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

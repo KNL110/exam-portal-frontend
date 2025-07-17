@@ -5,6 +5,7 @@ import './index.css'
 import { Home } from './pages/Home.jsx';
 import { StudentDashboard } from './pages/StudentDashboard.jsx';
 import { ProfessorDashboard } from './pages/ProfessorDashboard.jsx';
+import { ExamHistory } from './pages/ExamHistory.jsx';
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
         path: "/plogin",
         element: <ProfessorDashboard />
     },
+    {
+        path: "/login/examHistory",
+        element: <ExamHistory />
+    }
 ]);
 createRoot(document.getElementById('root')).render(
     <StrictMode>

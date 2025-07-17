@@ -16,7 +16,7 @@ export const ProfileMenu = () => {
     return (
         <div style={{ position: "relative" }}>
             <img
-                src="../../public/OIG.jpeg"
+                src="../../public/DefaultPFP.jpg"
                 alt="Profile"
                 style={{
                     width: "40px",

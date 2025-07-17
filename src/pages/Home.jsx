@@ -27,7 +27,7 @@ export const Home = () => {
                         <RoleCard 
                             role="Student"
                             message="Take exams using unique exam codes"
-                            onClick={() => navigate("/login")}
+                            onClick={() => navigate("/login")}   
                         />
                         <RoleCard 
                             role="Professor"
