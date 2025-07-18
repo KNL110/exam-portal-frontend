@@ -63,17 +63,6 @@ body {
     transform: translateY(-2px);
 }
 
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 2px solid white;
-}
-
-.btn-secondary:hover {
-    background: white;
-    color: #2e7d32;
-}
-
 .btn-success {
     background: #4caf50;
     color: white;
@@ -151,6 +140,18 @@ body {
 .form-textarea {
     resize: vertical;
     min-height: 100px;
+}
+
+/* Form Buttons */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.form-actions .btn {
+    min-width: 120px;
 }
 
 /* Grid Layout */
@@ -305,11 +306,6 @@ body {
 
 .timer.danger {
     background: #f44336;
-}
-
-/* Hidden class */
-.hidden {
-    display: none;
 }
 
 /* Responsive */

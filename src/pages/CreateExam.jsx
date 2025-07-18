@@ -3,23 +3,48 @@ import { useState } from 'react';
 import { QuestionCard } from '../components/ExamQuestion';
 import axios from 'axios';
 import { SiteCard } from '../components/SiteCard';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateExamPage = () => {
-    const [examTitle, setExamTitle] = useState('');
-    const [examCode, setExamCode] = useState('');
-    const [correctMarks, setCorrectMarks] = useState(4);
-    const [incorrectMarks, setIncorrectMarks] = useState(-1);
-    const [unattemptedMarks, setUnattemptedMarks] = useState(0);
-    const [timeLimit, setTimeLimit] = useState(60);
+    // Initial state values
+    const initialState = {
+        examTitle: '',
+        examCode: '',
+        correctMarks: 4,
+        incorrectMarks: -1,
+        unattemptedMarks: 0,
+        timeLimit: 60,
+        questions: []
+    };
 
-    const [questions, setQuestions] = useState([]);
+    const [examTitle, setExamTitle] = useState(initialState.examTitle);
+    const [examCode, setExamCode] = useState(initialState.examCode);
+    const [correctMarks, setCorrectMarks] = useState(initialState.correctMarks);
+    const [incorrectMarks, setIncorrectMarks] = useState(initialState.incorrectMarks);
+    const [unattemptedMarks, setUnattemptedMarks] = useState(initialState.unattemptedMarks);
+    const [timeLimit, setTimeLimit] = useState(initialState.timeLimit);
+
+    const [questions, setQuestions] = useState(initialState.questions);
+
+    const navigate = useNavigate();
+
+    // Reset form to initial state
+    const resetForm = () => {
+        setExamTitle(initialState.examTitle);
+        setExamCode(initialState.examCode);
+        setCorrectMarks(initialState.correctMarks);
+        setIncorrectMarks(initialState.incorrectMarks);
+        setUnattemptedMarks(initialState.unattemptedMarks);
+        setTimeLimit(initialState.timeLimit);
+        setQuestions(initialState.questions);
+    };
 
     const addQuestion = () => {
         setQuestions([
             ...questions,
             {
                 id: Date.now(),
-                type: 'MCQ',
+                type: 'mcq',
                 text: '',
                 options: ['', '', '', ''],
                 correct: 0,
@@ -42,6 +67,28 @@ export const CreateExamPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Validation
+        if (questions.length === 0) {
+            alert('Please add at least one question before saving the exam.');
+            return;
+        }
+
+        // Check if all questions have text
+        const emptyQuestions = questions.filter(q => !q.text.trim());
+        if (emptyQuestions.length > 0) {
+            alert('Please fill in all question texts before saving.');
+            return;
+        }
+
+        // Check MCQ questions have at least 2 options
+        const incompleteQuestions = questions.filter(q => 
+            q.type === 'mcq' && q.options.filter(opt => opt.trim() !== '').length < 2
+        );
+        if (incompleteQuestions.length > 0) {
+            alert('MCQ questions must have at least 2 options.');
+            return;
+        }
+
         const formattedQuestions = questions.map((q) => ({
             questionID: `Q-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
             question: q.text,
@@ -62,16 +109,39 @@ export const CreateExamPage = () => {
                 unattempted: unattemptedMarks,
             },
             questions: formattedQuestions,
-            createdBy: ""
+            // createdBy will be set by the backend from the authenticated user
         };
 
         try {
-            const res = await axios.post('/api/v1/exam/creatExam', examData);
+            // Get token from localStorage (as stored in login)
+            const token = localStorage.getItem('accessToken');
+            
+            console.log('Token:', token ? 'Found' : 'Not found');
+            console.log('Exam Data being sent:', JSON.stringify(examData, null, 2));
+            
+            const res = await axios.post('/api/v1/exam/creatExam', examData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             console.log('Exam created:', res.data);
             alert('Exam created successfully!');
+            
+            // Reset form to original state
+            resetForm();
         } catch (error) {
-            console.error(error);
-            alert('Failed to create exam.');
+            console.error('Full error object:', error);
+            console.error('Error response:', error.response);
+            console.error('Error response data:', error.response?.data);
+            
+            if (error.response?.status === 401) {
+                alert('Authentication failed. Please log in again.');
+            } else if (error.response?.status === 400) {
+                alert(`Bad Request: ${error.response?.data?.message || 'Invalid data sent to server'}`);
+            } else {
+                alert(`Failed to create exam: ${error.response?.data?.message || error.message}`);
+            }
         }
     };
 
@@ -150,13 +220,19 @@ export const CreateExamPage = () => {
                         />
                     </div>
 
-                    <button type="button" className="btn btn-success" onClick={addQuestion}>
-                        Add Question
-                    </button>
+                    <div className="form-actions">
+                        <button type="button" className="btn btn-success" onClick={addQuestion}>
+                            Add Question
+                        </button>
 
-                    <button type="submit" className="btn btn-primary">
-                        Save Exam
-                    </button>
+                        <button type="submit" className="btn btn-primary">
+                            Save Exam
+                        </button>
+                        
+                        <button type="button" className="btn" onClick={resetForm}>
+                            Clear Form
+                        </button>
+                    </div>
                 </form>
 
                 <div id="questionsContainer">
@@ -169,6 +245,12 @@ export const CreateExamPage = () => {
                             handleChange={handleQuestionChange}
                         />
                     ))}
+                </div>
+                
+                <div className="form-actions">
+                    <button type="button" className="btn" onClick={() => navigate('/professor')}>
+                        Back to Dashboard
+                    </button>
                 </div>
             </div>
         </SiteCard>
