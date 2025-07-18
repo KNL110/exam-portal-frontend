@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import '../login.css';
 
-export default function LoginPage({role}) {
+export default function LoginPage() {
+
+    const role = sessionStorage.getItem("selectedRole");
+
+    const endpoint = (role === "candidate")
+                ? "http://localhost:3000/api/v1/candidate/login"
+                : "http://localhost:3000/api/v1/professor/login";
+
     const [formData, setFormData] = useState({
-        email: '',
+        identifier: '',
         password: ''
     });
+
     const [isLoading, setIsLoading] = useState(false);
 
-    const endpoint = (role === "candidate")? 
-                    "http://localhost:3000/api/v1/candidate/login" :
-                    "http://localhost:3000/api/v1/professor/login"
 
     const handleInputChange = (e) => {
         setFormData({
@@ -34,6 +39,7 @@ export default function LoginPage({role}) {
             });
 
             const data = await response.json();
+            console.log(data);
 
             if (!response.ok) {
                 throw new Error(data.message || 'Login failed');
@@ -65,18 +71,18 @@ export default function LoginPage({role}) {
 
                     <div className="login-form">
                         <div className="form-group">
-                            <label htmlFor="email" className="form-label">
-                                Email Address
+                            <label htmlFor="identifier" className="form-label">
+                                Email or Institute ID
                             </label>
                             <div className="input-wrapper">
                                 <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
+                                    type="text"
+                                    id="identifier"
+                                    name="identifier"
+                                    value={formData.identifier}
                                     onChange={handleInputChange}
                                     className="form-input"
-                                    placeholder="Enter your email"
+                                    placeholder="Enter your email or Institute ID"
                                     required
                                 />
                             </div>

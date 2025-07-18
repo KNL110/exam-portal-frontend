@@ -7,6 +7,11 @@ import { useNavigate } from 'react-router-dom'
 export const Home = () => {
 
     const navigate = useNavigate();
+    
+    const redirect = (role) => {
+        sessionStorage.setItem("selectedRole", role);
+        navigate("/login");
+    }
 
     return (
         <>
@@ -27,12 +32,12 @@ export const Home = () => {
                         <RoleCard 
                             role="Student"
                             message="Take exams using unique exam codes"
-                            onClick={() => navigate("/login")}   
+                            onClick={() => redirect("candidate")}   
                         />
                         <RoleCard 
                             role="Professor"
                             message="Create and manage exams"
-                            onClick={() => navigate("/plogin")}
+                            onClick={() => redirect("professor")}
                         />
                     </div>
                 </div>
