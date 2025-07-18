@@ -3,14 +3,27 @@ import { SiteCard } from '../components/SiteCard'
 import { RoleCard } from '../components/RoleCard'
 import { Button } from '../components/Button'
 import { useNavigate } from 'react-router-dom'
+import { getAuthRedirectInfo, setUserRole } from '../utils/auth'
 
 export const Home = () => {
 
     const navigate = useNavigate();
     
     const redirect = (role) => {
-        sessionStorage.setItem("selectedRole", role);
-        navigate("/login");
+        // Set the selected role in session storage
+        setUserRole(role);
+        
+        // Check authentication status and get redirect path
+        const { isAuth, redirectPath } = getAuthRedirectInfo(role);
+        
+        if (isAuth) {
+            console.log(`User is already authenticated as ${role}, redirecting to dashboard`);
+        } else {
+            console.log(`User is not authenticated, redirecting to login`);
+        }
+        
+        // Navigate to appropriate page
+        navigate(redirectPath);
     }
 
     return (
