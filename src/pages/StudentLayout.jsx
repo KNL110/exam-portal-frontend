@@ -6,7 +6,7 @@ export const StudentLayout = () => {
     return (
         <>
             <Navbar>
-                <ProfileMenu />
+                <ProfileMenu role="candidate"/>
             </Navbar>
             <Outlet/>
         </>

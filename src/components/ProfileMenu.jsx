@@ -1,16 +1,72 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const ProfileMenu = () => {
+export const ProfileMenu = ({role}) => {
     const [showMenu, setShowMenu] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleProfile = () => {
         navigate("/profile");
+        setShowMenu(false);
     };
 
-    const handleLogout = () => {
-        navigate("/");
+    const handleLogout = async () => {
+        setIsLoading(true);
+        
+        try {
+            // Get token from localStorage
+            const token = localStorage.getItem('accessToken');
+            
+            if (!token) {
+                // If no token, just clear localStorage and redirect
+                localStorage.removeItem('accessToken');
+                sessionStorage.clear();
+                navigate("/");
+                return;
+            }
+            
+            // Determine the logout endpoint based on role
+            const logoutEndpoint = role === 'candidate' 
+                ? '/api/v1/candidate/logout' 
+                : '/api/v1/professor/logout';
+            
+            console.log(`Logging out ${role} via ${logoutEndpoint}`);
+            
+            // Call the logout API
+            const response = await fetch(logoutEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // Include cookies for refreshToken
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                console.error('Logout failed:', data.message);
+                // Even if logout fails, clear local storage
+            }
+            
+            console.log('Logout successful:', data.message);
+            
+        } catch (error) {
+            console.error('Logout error:', error);
+            // Even if there's an error, we should clear local storage
+        } finally {
+            // Always clear local storage and redirect
+            localStorage.removeItem('accessToken');
+            sessionStorage.clear();
+            
+            // Clear any other stored user data
+            localStorage.removeItem('selectedRole');
+            sessionStorage.removeItem('selectedRole');
+            
+            setIsLoading(false);
+            navigate("/");
+        }
     };
 
     return (
@@ -47,10 +103,15 @@ export const ProfileMenu = () => {
                         Profile
                     </button>
                     <button
-                        style={dropdownItemStyle}
+                        style={{
+                            ...dropdownItemStyle,
+                            opacity: isLoading ? 0.6 : 1,
+                            cursor: isLoading ? 'not-allowed' : 'pointer'
+                        }}
                         onClick={handleLogout}
+                        disabled={isLoading}
                     >
-                        Logout
+                        {isLoading ? 'Logging out...' : 'Logout'}
                     </button>
                 </div>
             )}
@@ -67,7 +128,8 @@ const dropdownItemStyle = {
     border: "none",
     cursor: "pointer",
     color: "#333",
-    fontSize: "14px"
+    fontSize: "14px",
+    transition: "background-color 0.2s ease"
 };
 
 export default ProfileMenu;

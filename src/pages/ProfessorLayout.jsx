@@ -6,7 +6,7 @@ export const ProfessorLayout = () => {
     return (
         <>
             <Navbar>
-                <ProfileMenu />
+                <ProfileMenu role="professor"/>
             </Navbar>
             <Outlet/>
         </>

@@ -1,7 +1,6 @@
 // CreateExamPage.jsx
 import { useState } from 'react';
 import { QuestionCard } from '../components/ExamQuestion';
-import axios from 'axios';
 import { SiteCard } from '../components/SiteCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -119,28 +118,35 @@ export const CreateExamPage = () => {
             console.log('Token:', token ? 'Found' : 'Not found');
             console.log('Exam Data being sent:', JSON.stringify(examData, null, 2));
             
-            const res = await axios.post('/api/v1/exam/creatExam', examData, {
+            const response = await fetch('/api/v1/exam/creatExam', {
+                method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(examData)
             });
-            console.log('Exam created:', res.data);
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || `HTTP error! status: ${response.status}`);
+            }
+            
+            console.log('Exam created:', data);
             alert('Exam created successfully!');
             
             // Reset form to original state
             resetForm();
         } catch (error) {
             console.error('Full error object:', error);
-            console.error('Error response:', error.response);
-            console.error('Error response data:', error.response?.data);
             
-            if (error.response?.status === 401) {
+            if (error.message && error.message.includes('401')) {
                 alert('Authentication failed. Please log in again.');
-            } else if (error.response?.status === 400) {
-                alert(`Bad Request: ${error.response?.data?.message || 'Invalid data sent to server'}`);
+            } else if (error.message && error.message.includes('400')) {
+                alert(`Bad Request: ${error.message}`);
             } else {
-                alert(`Failed to create exam: ${error.response?.data?.message || error.message}`);
+                alert(`Failed to create exam: ${error.message}`);
             }
         }
     };
