@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import '../login.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
 
     const role = sessionStorage.getItem("selectedRole");
 
     const endpoint = (role === "candidate")
-                ? "http://localhost:3000/api/v1/candidate/login"
-                : "http://localhost:3000/api/v1/professor/login";
+        ? "http://localhost:3000/api/v1/candidate/login"
+        : "http://localhost:3000/api/v1/professor/login";
 
     const [formData, setFormData] = useState({
         identifier: '',
@@ -15,6 +16,7 @@ export default function LoginPage() {
     });
 
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
 
     const handleInputChange = (e) => {
@@ -39,18 +41,22 @@ export default function LoginPage() {
             });
 
             const data = await response.json();
-            console.log(data);
 
             if (!response.ok) {
                 throw new Error(data.message || 'Login failed');
             }
 
-            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('accessToken', data.data.accessToken);
 
-            alert('Login successful! Access token stored.');
+            alert('Login successful!');
 
-            // Example: Redirect user to dashboard
-            // navigate('/dashboard');
+            if (role === "candidate") {
+                navigate("/student");
+            } else if (role === "professor") {
+                navigate("/professor");
+            } else {
+                navigate("/");
+            }
         } catch (error) {
             console.error(error);
             alert(error.message);

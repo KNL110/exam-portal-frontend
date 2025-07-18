@@ -22,8 +22,8 @@ export const Home = () => {
             </Navbar>
             <SiteCard id="loginPage">
                 <div className='card'>
-                    <div class="card-header">
-                        <h2 class="card-title">Welcome to Goa Testing Agency</h2>
+                    <div className="card-header">
+                        <h2 className="card-title">Welcome to Goa Testing Agency</h2>
                     </div>
                     <p style={{ marginBottom: '30px', color: '#666' }}>
                         Select your role to continue:

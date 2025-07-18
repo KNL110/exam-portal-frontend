@@ -19,7 +19,7 @@ export const StudentDashboard = () => {
                             <label className="form-label">Enter Exam Code</label>
                             <input type="text" className="form-input" id="studentExamCode" placeholder="Enter exam code" />
                         </div>
-                        <Button type="button" className="btn btn-success" onclick="startExam()">Start Exam</Button>
+                        <Button type="button" className="btn btn-success" onClick="startExam()">Start Exam</Button>
                     </RoleCard>
                     <RoleCard role="Exam History" textalign="left">
                         <Button type="button" className="btn btn-primary" onClick={() => navigate("/student/examHistory")}>View History</Button>
