@@ -1,6 +1,3 @@
-import React from 'react'
-import { Navbar } from '../components/Navbar'
-import ProfileMenu from '../components/ProfileMenu'
 import { SiteCard } from '../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
 

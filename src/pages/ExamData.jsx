@@ -50,7 +50,7 @@ export const ExamData = () => {
                         onClick = {()=> navigate("/professor/examHistory/examDetails")}
                     />
                 </div>
-                <Button type="button" className="btn" onclick="showProfessorView()">Back to Dashboard</Button>
+                <Button type="button" className="btn" onClick={()=> navigate("/professor")}>Back to Dashboard</Button>
             </div>
         </SiteCard>
     )
