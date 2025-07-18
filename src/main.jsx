@@ -13,6 +13,7 @@ import { ProfessorLayout } from './pages/ProfessorLayout.jsx';
 import { ExamData } from './pages/ExamData.jsx';
 import { ExamDetail } from './pages/ExamDetail.jsx';
 import { CreateExamPage } from './pages/CreateExam.jsx';
+import { TakeExam } from './pages/TakeExam.jsx';
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
             {
                 path: "examHistory/response",
                 element: <Response />
+            },
+            {
+                path: "exam/:examID",
+                element: <TakeExam />
             }
         ]
     },

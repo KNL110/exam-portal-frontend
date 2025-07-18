@@ -5,7 +5,6 @@ import { SiteCard } from '../components/SiteCard';
 import { useNavigate } from 'react-router-dom';
 
 export const CreateExamPage = () => {
-    // Initial state values
     const initialState = {
         examTitle: '',
         examCode: '',
@@ -27,7 +26,6 @@ export const CreateExamPage = () => {
 
     const navigate = useNavigate();
 
-    // Reset form to initial state
     const resetForm = () => {
         setExamTitle(initialState.examTitle);
         setExamCode(initialState.examCode);
@@ -66,20 +64,17 @@ export const CreateExamPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validation
         if (questions.length === 0) {
             alert('Please add at least one question before saving the exam.');
             return;
         }
 
-        // Check if all questions have text
         const emptyQuestions = questions.filter(q => !q.text.trim());
         if (emptyQuestions.length > 0) {
             alert('Please fill in all question texts before saving.');
             return;
         }
 
-        // Check MCQ questions have at least 2 options
         const incompleteQuestions = questions.filter(q => 
             q.type === 'mcq' && q.options.filter(opt => opt.trim() !== '').length < 2
         );
@@ -107,18 +102,15 @@ export const CreateExamPage = () => {
                 incorrect: incorrectMarks,
                 unattempted: unattemptedMarks,
             },
-            questions: formattedQuestions,
-            // createdBy will be set by the backend from the authenticated user
+            questions: formattedQuestions
         };
 
         try {
-            // Get token from localStorage (as stored in login)
             const token = localStorage.getItem('accessToken');
             
             console.log('Token:', token ? 'Found' : 'Not found');
-            console.log('Exam Data being sent:', JSON.stringify(examData, null, 2));
             
-            const response = await fetch('/api/v1/exam/creatExam', {
+            const response = await fetch('http://localhost:3000/api/v1/exam/creatExam', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -135,19 +127,10 @@ export const CreateExamPage = () => {
             
             console.log('Exam created:', data);
             alert('Exam created successfully!');
-            
-            // Reset form to original state
             resetForm();
+
         } catch (error) {
-            console.error('Full error object:', error);
-            
-            if (error.message && error.message.includes('401')) {
-                alert('Authentication failed. Please log in again.');
-            } else if (error.message && error.message.includes('400')) {
-                alert(`Bad Request: ${error.message}`);
-            } else {
-                alert(`Failed to create exam: ${error.message}`);
-            }
+            alert(`Failed to create exam: ${error.message}`);
         }
     };
 
