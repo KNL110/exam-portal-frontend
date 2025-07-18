@@ -21,7 +21,7 @@ export const HistoryCard = (props) => {
                 <p><strong>Code:</strong> {code}</p>
                 <p><strong>Questions:</strong> {questionsLength}</p>
                 <p><strong>Students Attempted:</strong> {resultsLength}</p>
-                <button type="button" class="btn btn-primary" onclick={onClick}>View Details</button>
+                <button type="button" class="btn btn-primary" onClick={onClick}>View Details</button>
             </div>
         )
     }
