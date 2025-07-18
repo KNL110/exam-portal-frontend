@@ -11,7 +11,7 @@ import LoginPage from './pages/Login.jsx';
 import { StudentLayout } from './pages/StudentLayout.jsx';
 import { ProfessorLayout } from './pages/ProfessorLayout.jsx';
 import { ExamData } from './pages/ExamData.jsx';
-import { ExamDetails } from './pages/ExamDetails.jsx';
+import { ExamDetails } from './pages/ExamDetail.jsx';
 
 const router = createBrowserRouter([
     {
