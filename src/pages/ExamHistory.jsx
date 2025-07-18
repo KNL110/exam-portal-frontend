@@ -1,9 +1,6 @@
-import React from 'react'
 import { SiteCard } from '../components/SiteCard'
 import { Button } from '../components/Button'
 import { useNavigate } from 'react-router-dom'
-import { Navbar } from '../components/Navbar'
-import ProfileMenu from "../components/ProfileMenu"
 import { HistoryCard } from '../components/HistoryCard'
 
 export const ExamHistory = () => {
@@ -23,6 +20,7 @@ export const ExamHistory = () => {
                         marks={studentHistory[0].marks}
                         totalMarks={studentHistory[0].totalMarks}
                         onClick={() => navigate("/student/examHistory/response")}
+                        response={true}
                     />
                 </div>
                 <Button type="button" className="btn" onClick={() => navigate("/student")}>Back to Dashboard</Button>

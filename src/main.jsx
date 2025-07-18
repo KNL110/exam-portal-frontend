@@ -9,6 +9,9 @@ import { ExamHistory } from './pages/ExamHistory.jsx';
 import { Response } from './pages/Response.jsx';
 import LoginPage from './pages/Login.jsx';
 import { StudentLayout } from './pages/StudentLayout.jsx';
+import { ProfessorLayout } from './pages/ProfessorLayout.jsx';
+import { ExamData } from './pages/ExamData.jsx';
+import { ExamDetails } from './pages/ExamDetails.jsx';
 
 const router = createBrowserRouter([
     {
@@ -38,8 +41,22 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/plogin",
-        element: <ProfessorDashboard />
+        path: "/professor",
+        element: <ProfessorLayout />,
+        children: [
+            {
+                path: "",
+                element: <ProfessorDashboard />
+            },
+            {
+                path: "examHistory",
+                element: <ExamData />
+            },
+            {
+                path: "examHistory/examDetails",
+                element: <ExamDetails />
+            }
+        ]
 
     }
 ]);
