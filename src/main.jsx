@@ -11,7 +11,7 @@ import LoginPage from './pages/Login.jsx';
 import { StudentLayout } from './pages/StudentLayout.jsx';
 import { ProfessorLayout } from './pages/ProfessorLayout.jsx';
 import { ExamData } from './pages/ExamData.jsx';
-import { ExamDetails } from './pages/ExamDetail.jsx';
+import { ExamDetail } from './pages/ExamDetail.jsx';
 
 const router = createBrowserRouter([
     {
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "examHistory/examDetails",
-                element: <ExamDetails />
+                element: <ExamDetail />
             }
         ]
 

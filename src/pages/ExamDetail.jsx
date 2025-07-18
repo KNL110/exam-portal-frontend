@@ -1,4 +1,5 @@
-import { ExamDetails } from '../components/ExamStats';
+import { QuestionCard } from '../components/QuestionCard';
+import { RanklistTable } from '../components/RankListTable';
 import { SiteCard } from '../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
 
@@ -33,16 +34,45 @@ export const ExamDetail = () => {
         ]
     }
 
+    const marks = exam.results.map(r => r.marks);
+    const avgMarks = marks.length > 0 ? (marks.reduce((a, b) => a + b, 0) / marks.length).toFixed(2) : 0;
+    const highestMarks = marks.length > 0 ? Math.max(...marks) : 0;
+    const lowestMarks = marks.length > 0 ? Math.min(...marks) : 0;
+
     const navigate = useNavigate();
 
     return (
         <SiteCard id="examDetailsPage">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Exam Details</h2>
+            <div className="card">
+                <div className="card-header">
+                    <h2 className="card-title">Exam Details</h2>
                 </div>
-                <ExamDetails exam={exam}/>
-                <button type="button" class="btn" onClick={() => navigate("/professor/examHistory")}>Back to History</button>
+                <div id="examDetailsContent">
+                    <h3 style={{ color: "#2e7d32", marginBottom: "20px" }}>{exam.title}</h3>
+                    <h4 style={{ color: "#2e7d32", marginBottom: "15px" }}>Statistics</h4>
+                    <div className="stats-grid">
+                        <div className="stat-card">
+                            <div className="stat-value">{avgMarks}</div>
+                            <div className="stat-label">Average Marks</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-value">{highestMarks}</div>
+                            <div className="stat-label">Highest Marks</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-value">{lowestMarks}</div>
+                            <div className="stat-label">Lowest Marks</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-value">{exam.results.length}</div>
+                            <div className="stat-label">Total Students</div>
+                        </div>
+                    </div>
+                    <QuestionCard q={exam.questions[0]} />
+                    <QuestionCard q={exam.questions[1]} />
+                    <RanklistTable results={exam.results} />
+                </div>
+                <button type="button" className="btn" onClick={() => navigate("/professor/examHistory")}>Back to History</button>
             </div>
         </SiteCard>
     )
