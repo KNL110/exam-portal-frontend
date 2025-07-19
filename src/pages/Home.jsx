@@ -24,9 +24,9 @@ export const Home = () => {
     return (
         <>
             <Navbar>
-                <Button className="btn btn-primary">
+                <button className="btn btn-primary">
                     Register
-                </Button>
+                </button>
             </Navbar>
             <SiteCard id="loginPage">
                 <div className='card'>

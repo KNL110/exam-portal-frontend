@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css'
+import { ExamDataProvider } from './context/examDataContext.jsx'
 import { Home } from './pages/Home.jsx';
 import { StudentDashboard } from './pages/StudentDashboard.jsx';
 import { ProfessorDashboard } from './pages/ProfessorDashboard.jsx';
@@ -72,6 +73,8 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <RouterProvider router={router} />
+        <ExamDataProvider>
+            <RouterProvider router={router} />
+        </ExamDataProvider>
     </StrictMode>,
 )

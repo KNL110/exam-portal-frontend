@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { QuestionCard } from '../components/ExamQuestion';
 import { SiteCard } from '../components/SiteCard';
 import { useNavigate } from 'react-router-dom';
+import { createExamApi } from '../api/createExamApi';
 
 export const CreateExamPage = () => {
     const initialState = {
@@ -13,6 +14,7 @@ export const CreateExamPage = () => {
         timeLimit: 60,
         questions: []
     };
+    const navigate = useNavigate();
 
     const [examTitle, setExamTitle] = useState(initialState.examTitle);
     const [examCode, setExamCode] = useState(initialState.examCode);
@@ -20,10 +22,8 @@ export const CreateExamPage = () => {
     const [incorrectMarks, setIncorrectMarks] = useState(initialState.incorrectMarks);
     const [unattemptedMarks, setUnattemptedMarks] = useState(initialState.unattemptedMarks);
     const [timeLimit, setTimeLimit] = useState(initialState.timeLimit);
-
     const [questions, setQuestions] = useState(initialState.questions);
 
-    const navigate = useNavigate();
 
     const resetForm = () => {
         setExamTitle(initialState.examTitle);
@@ -74,7 +74,7 @@ export const CreateExamPage = () => {
             return;
         }
 
-        const incompleteQuestions = questions.filter(q => 
+        const incompleteQuestions = questions.filter(q =>
             q.type === 'mcq' && q.options.filter(opt => opt.trim() !== '').length < 2
         );
         if (incompleteQuestions.length > 0) {
@@ -104,33 +104,9 @@ export const CreateExamPage = () => {
             questions: formattedQuestions
         };
 
-        try {
-            const token = localStorage.getItem('accessToken');
-            
-            console.log('Token:', token ? 'Found' : 'Not found');
-            
-            const response = await fetch('http://localhost:3000/api/v1/exam/creatExam', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(examData)
-            });
-            
-            const data = await response.json();
-            
-            if (!response.ok) {
-                throw new Error(data.message || `HTTP error! status: ${response.status}`);
-            }
-            
-            console.log('Exam created:', data);
-            alert('Exam created successfully!');
-            resetForm();
-
-        } catch (error) {
-            alert(`Failed to create exam: ${error.message}`);
-        }
+        await createExamApi(examData)
+            .then(() => resetForm())
+            .catch((error) => alert(`Failed to create exam: ${error.message}`))
     };
 
     return (
@@ -216,7 +192,7 @@ export const CreateExamPage = () => {
                         <button type="submit" className="btn btn-primary">
                             Save Exam
                         </button>
-                        
+
                         <button type="button" className="btn" onClick={resetForm}>
                             Clear Form
                         </button>
@@ -234,7 +210,7 @@ export const CreateExamPage = () => {
                         />
                     ))}
                 </div>
-                
+
                 <div className="form-actions">
                     <button type="button" className="btn" onClick={() => navigate('/professor')}>
                         Back to Dashboard
