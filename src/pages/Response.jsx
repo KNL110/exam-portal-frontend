@@ -1,36 +1,61 @@
 import { SiteCard } from '../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
+import { ResponseCard } from '../components/ResponseCard'
 
 export const Response = () => {
 
     const navigate = useNavigate();
 
-    let sh = { examId: 1, title: "Physics Mock Test", marks: 7, totalMarks: 8 }
+    const response = JSON.parse(sessionStorage.getItem('selectedResponse')) || {};
+    const exam = JSON.parse(sessionStorage.getItem('selectedResponseExam')) || {};
+
+    // Calculate total marks based on exam marking scheme and questions
+    const calculateTotalMarks = () => {
+        if (!exam.questions || !exam.markingScheme) return 0;
+        return exam.questions.length * exam.markingScheme.correct;
+    };
+    
+    const totalMarks = calculateTotalMarks();
+    const percentage = totalMarks > 0 ? ((response.score || 0) / totalMarks * 100).toFixed(2) : 0;
 
     return (
         <SiteCard id="resultsPage">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Exam Results</h2>
+            <div className="card">
+                <div className="card-header">
+                    <h2 className="card-title">Exam Results - {exam.examName}</h2>
                 </div>
                 <div id="resultsContent">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value">{sh.marks}</div>
-                            <div class="stat-label">Your Marks</div>
+                    <div className="stats-grid">
+                        <div className="stat-card">
+                            <div className="stat-value">{response.score || 0}</div>
+                            <div className="stat-label">Your Marks</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-value">{sh.totalMarks}</div>
-                            <div class="stat-label">Total Marks</div>
+                        <div className="stat-card">
+                            <div className="stat-value">{totalMarks}</div>
+                            <div className="stat-label">Total Marks</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-value">{(sh.marks / sh.totalMarks) * 100}%</div>
-                            <div class="stat-label">Percentage</div>
+                        <div className="stat-card">
+                            <div className="stat-value">{percentage}%</div>
+                            <div className="stat-label">Percentage</div>
                         </div>
                     </div>
 
+                    <h3 style={{ color: '#2e7d32', marginTop: '30px', marginBottom: '20px' }}>Detailed Response</h3>
+                    
+                    {response.answers && response.answers.map((answer, index) => {
+                        const question = exam.questions?.find(q => q._id === answer.questionID);
+                        return question ? (
+                            <ResponseCard 
+                                key={index} 
+                                question={question}
+                                answer={answer}
+                                examMarkingScheme={exam.markingScheme}
+                            />
+                        ) : null;
+                    })}
+
                 </div>
-                <button type="button" class="btn" onclick={() => navigate("/student")}>Back to Dashboard</button>
+                <button type="button" className="btn" onClick={() => navigate("/student/examHistory")}>Back to Exam History</button>
             </div>
         </SiteCard>
     )

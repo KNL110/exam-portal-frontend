@@ -11,7 +11,7 @@ export const RanklistTable = ({ results }) => {
                 <tr>
                     <th>Rank</th>
                     <th>Student Name</th>
-                    <th>Student ID</th>
+                    <th>Roll Number</th>
                     <th>Marks</th>
                 </tr>
             </thead>

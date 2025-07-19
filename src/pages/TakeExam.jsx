@@ -84,7 +84,6 @@ export const TakeExam = () => {
             if (response.ok) {
                 const result = await response.json();
                 startTime = result.data.startTime;
-                console.log('Start exam success:', result);
             } else {
                 const error = await response.json();
                 console.error('Start exam error:', error);

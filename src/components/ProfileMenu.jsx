@@ -28,7 +28,6 @@ export const ProfileMenu = ({role}) => {
                 ? '/api/v1/candidate/logout' 
                 : '/api/v1/professor/logout';
             
-            console.log(`Logging out ${role} via ${logoutEndpoint}`);
             
             const response = await fetch(logoutEndpoint, {
                 method: 'POST',
@@ -62,7 +61,7 @@ export const ProfileMenu = ({role}) => {
     return (
         <div style={{ position: "relative" }}>
             <img
-                src="../../public/DefaultPFP.jpg"
+                src="/DefaultPFP.jpg"
                 alt="Profile"
                 style={{
                     width: "40px",

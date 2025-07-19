@@ -47,6 +47,7 @@ export default function LoginPage() {
             }
 
             localStorage.setItem('accessToken', data.data.accessToken);
+            localStorage.setItem('identifier', formData.identifier);
 
             alert('Login successful!');
 

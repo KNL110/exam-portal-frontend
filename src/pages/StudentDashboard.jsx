@@ -7,7 +7,6 @@ export const StudentDashboard = () => {
 
     const navigate = useNavigate();
     const [examCode, setExamCode] = useState(""); //exam code refers to exam id
-
     const startExam = async () => {
         if (!examCode.trim()) {
             alert('Please enter an exam code');
@@ -61,7 +60,14 @@ export const StudentDashboard = () => {
                         <button type="button" className="btn btn-success" onClick={startExam}>Start Exam</button>
                     </RoleCard>
                     <RoleCard role="Exam History" textalign="left">
-                        <button type="button" className="btn btn-primary" onClick={() => navigate("/student/examHistory")}>View History</button>
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={() => {
+                                navigate("/student/examHistory")
+                            }}>
+                            View History
+                        </button>
                     </RoleCard>
                 </div>
             </div>

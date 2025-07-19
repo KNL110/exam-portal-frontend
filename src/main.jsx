@@ -1,7 +1,7 @@
+import './index.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './index.css'
 import { ExamDataProvider } from './context/examDataContext.jsx'
 import { Home } from './pages/Home.jsx';
 import { StudentDashboard } from './pages/StudentDashboard.jsx';

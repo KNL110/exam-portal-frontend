@@ -10,14 +10,7 @@ export const Home = () => {
     
     const redirect = (role) => {
         setUserRole(role);
-        
-        const { isAuth, redirectPath } = getAuthRedirectInfo(role);
-        
-        if (isAuth) {
-            console.log(`User is already authenticated as ${role}, redirecting to dashboard`);
-        } else {
-            console.log(`User is not authenticated, redirecting to login`);
-        }
+        const {redirectPath } = getAuthRedirectInfo(role);
         navigate(redirectPath);
     }
 

@@ -2,37 +2,56 @@ import { SiteCard } from '../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
 import { HistoryCard } from '../components/HistoryCard'
 import { useExamData } from '../context/examDataContext'
-import { getStudentResponsesApi } from '../api/studentResponseApi'
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getOneExamDataApi } from '../api/examDataApi'
 
 export const ExamHistory = () => {
-    const { examsData } = useExamData();
-    const [studentResponses, setStudentResponses] = useState([]);
+    const { examsData, studentResponses } = useExamData();
+    
     const [loading, setLoading] = useState(true);
+    const [examDetails, setExamDetails] = useState({});
     const navigate = useNavigate();
-
+    
     useEffect(() => {
-        fetchStudentResponses();
-    }, []);
-
-    const fetchStudentResponses = async () => {
-        try {
-            const responses = await getStudentResponsesApi();
-            // Filter responses for the current student (this will be automatically filtered by backend if using proper auth)
-            setStudentResponses(responses);
-        } catch (error) {
-            console.error('Error fetching student responses:', error);
-            if (error.message.includes('401')) {
-                navigate('/login');
-            }
-        } finally {
+        fetchExamDetails();
+    }, [studentResponses, examsData]) // eslint-disable-line react-hooks/exhaustive-deps
+    
+    const fetchExamDetails = async () => {
+        if (!studentResponses || studentResponses.length === 0) {
             setLoading(false);
+            return;
         }
-    };
-
-    const getExamDetails = (examId) => {
-        if (!examsData || !Array.isArray(examsData)) return null;
-        return examsData.find(exam => exam._id === examId);
+        
+        const details = {};
+        
+        // First try to find exam details from examsData context
+        for (const response of studentResponses) {
+            // Handle both old format (ObjectId) and new format (string)
+            const examId = response.examID;
+            
+            if (!examId) {
+                console.warn('Response missing examID:', response);
+                continue;
+            }
+            
+            // Look for exam in examsData first (faster)
+            const localExam = examsData.find(exam => exam.examID === examId || exam._id === examId);
+            if (localExam) {
+                details[examId] = localExam;
+            } else {
+                // Fallback to API call if not found locally
+                try {
+                    const examData = await getOneExamDataApi(examId);
+                    details[examId] = examData;
+                } catch (error) {
+                    console.error(`Error fetching exam ${examId}:`, error);
+                    details[examId] = null;
+                }
+            }
+        }
+        
+        setExamDetails(details);
+        setLoading(false);
     };
 
     const calculateTotalMarks = (exam) => {
@@ -58,11 +77,12 @@ export const ExamHistory = () => {
                     <h2 className="card-title">My Exam History</h2>
                 </div>
                 <div id="studentHistoryList">
-                    {studentResponses && studentResponses.length > 0 ? (
+                    {(studentResponses && studentResponses.length > 0) ? (
                         studentResponses.map((response, index) => {
-                            const exam = getExamDetails(response.examID);
-                            const totalMarks = calculateTotalMarks(exam);
+                            const exam = examDetails[response.examID];
                             
+                            const totalMarks = calculateTotalMarks(exam);
+
                             return (
                                 <HistoryCard
                                     key={response._id || index}
@@ -82,7 +102,8 @@ export const ExamHistory = () => {
                         <div className="card">
                             <p>No exam history found. Take an exam to see your results here.</p>
                         </div>
-                    )}
+                    )
+                    }
                 </div>
                 <button type="button" className="btn" onClick={() => navigate("/student")}>Back to Dashboard</button>
             </div>
