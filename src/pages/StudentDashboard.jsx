@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { RoleCard } from "../components/RoleCard"
 import { SiteCard } from "../components/SiteCard"
-import { Button } from "../components/Button"
 import { useNavigate } from "react-router-dom"
 
 export const StudentDashboard = () => {
@@ -59,10 +58,10 @@ export const StudentDashboard = () => {
                             <label className="form-label">Enter Exam Code</label>
                             <input type="text" className="form-input" id="studentExamCode" placeholder="Enter exam code" value={examCode} onChange={(e) => setExamCode(e.target.value)} />
                         </div>
-                        <Button type="button" className="btn btn-success" onClick={startExam}>Start Exam</Button>
+                        <button type="button" className="btn btn-success" onClick={startExam}>Start Exam</button>
                     </RoleCard>
                     <RoleCard role="Exam History" textalign="left">
-                        <Button type="button" className="btn btn-primary" onClick={() => navigate("/student/examHistory")}>View History</Button>
+                        <button type="button" className="btn btn-primary" onClick={() => navigate("/student/examHistory")}>View History</button>
                     </RoleCard>
                 </div>
             </div>

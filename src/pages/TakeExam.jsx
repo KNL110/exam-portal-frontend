@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { SiteCard } from "../components/SiteCard";
-import { Button } from "../components/Button";
 
 export const TakeExam = () => {
     const { examID } = useParams();
@@ -252,32 +251,32 @@ export const TakeExam = () => {
                     </div>
 
                     <div className="exam-controls">
-                        <Button
+                        <button
                             type="button"
                             className="btn btn-secondary"
                             onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
                             disabled={currentQuestion === 0}
                         >
                             Previous
-                        </Button>
+                        </button>
                         
-                        <Button
+                        <button
                             type="button"
                             className="btn btn-primary"
                             onClick={() => setCurrentQuestion(Math.min(exam.questions.length - 1, currentQuestion + 1))}
                             disabled={currentQuestion === exam.questions.length - 1}
                         >
                             Next
-                        </Button>
+                        </button>
                         
-                        <Button
+                        <button
                             type="button"
                             className="btn btn-success"
                             onClick={submitExam}
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? 'Submitting...' : 'Submit Exam'}
-                        </Button>
+                        </button>
                     </div>
                 </div>
             </div>

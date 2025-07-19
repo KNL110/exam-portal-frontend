@@ -1,5 +1,4 @@
 import { SiteCard } from '../components/SiteCard'
-import { Button } from '../components/Button'
 import { useNavigate } from 'react-router-dom'
 import { HistoryCard } from '../components/HistoryCard'
 
@@ -50,7 +49,7 @@ export const ExamData = () => {
                         onClick = {()=> navigate("/professor/examHistory/examDetails")}
                     />
                 </div>
-                <Button type="button" className="btn" onClick={()=> navigate("/professor")}>Back to Dashboard</Button>
+                <button type="button" className="btn" onClick={()=> navigate("/professor")}>Back to Dashboard</button>
             </div>
         </SiteCard>
     )

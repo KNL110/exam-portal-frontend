@@ -1,5 +1,3 @@
-import { Children } from "react";
-
 export const RoleCard = ({ role, message, onClick, children, textalign = "center" }) => {
     return (
         <div

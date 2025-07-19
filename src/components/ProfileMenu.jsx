@@ -15,55 +15,45 @@ export const ProfileMenu = ({role}) => {
         setIsLoading(true);
         
         try {
-            // Get token from localStorage
             const token = localStorage.getItem('accessToken');
             
             if (!token) {
-                // If no token, just clear localStorage and redirect
                 localStorage.removeItem('accessToken');
                 sessionStorage.clear();
                 navigate("/");
                 return;
             }
-            
-            // Determine the logout endpoint based on role
+
             const logoutEndpoint = role === 'candidate' 
                 ? '/api/v1/candidate/logout' 
                 : '/api/v1/professor/logout';
             
             console.log(`Logging out ${role} via ${logoutEndpoint}`);
             
-            // Call the logout API
             const response = await fetch(logoutEndpoint, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include' // Include cookies for refreshToken
+                credentials: 'include' 
             });
             
             const data = await response.json();
             
             if (!response.ok) {
                 console.error('Logout failed:', data.message);
-                // Even if logout fails, clear local storage
             }
             
             console.log('Logout successful:', data.message);
             
         } catch (error) {
             console.error('Logout error:', error);
-            // Even if there's an error, we should clear local storage
         } finally {
-            // Always clear local storage and redirect
             localStorage.removeItem('accessToken');
             sessionStorage.clear();
-            
-            // Clear any other stored user data
             localStorage.removeItem('selectedRole');
             sessionStorage.removeItem('selectedRole');
-            
             setIsLoading(false);
             navigate("/");
         }

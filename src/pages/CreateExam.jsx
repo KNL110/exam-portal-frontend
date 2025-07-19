@@ -1,4 +1,3 @@
-// CreateExamPage.jsx
 import { useState } from 'react';
 import { QuestionCard } from '../components/ExamQuestion';
 import { SiteCard } from '../components/SiteCard';

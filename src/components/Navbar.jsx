@@ -1,6 +1,3 @@
-import React from 'react';
-// import "./navbar.css";
-
 export const Navbar = ({children}) => {
     return (
         <div className="header">
