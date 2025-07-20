@@ -1,10 +1,13 @@
 import { SiteCard } from '../../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
 import { ResponseCard } from '../../components/ResponseCard'
+import { useState } from 'react'
+import { downloadResultsPDF, getStudentDataFromResponse } from '../../utils/pdf/pdfUtils'
 
 export const Response = () => {
 
     const navigate = useNavigate();
+    const [isDownloading, setIsDownloading] = useState(false);
 
     const response = JSON.parse(sessionStorage.getItem('selectedResponse')) || {};
     const exam = JSON.parse(sessionStorage.getItem('selectedResponseExam')) || {};
@@ -17,6 +20,27 @@ export const Response = () => {
     
     const totalMarks = calculateTotalMarks();
     const percentage = totalMarks > 0 ? ((response.score || 0) / totalMarks * 100).toFixed(2) : 0;
+
+    const handleDownloadPDF = async () => {
+        if (isDownloading) return;
+        
+        setIsDownloading(true);
+        try {
+            const studentData = await getStudentDataFromResponse();
+            const result = await downloadResultsPDF(exam, response, studentData);
+            
+            if (result.success) {
+                alert('PDF downloaded successfully!');
+            } else {
+                alert('Failed to download PDF: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error downloading PDF:', error);
+            alert('Error downloading PDF: ' + error.message);
+        } finally {
+            setIsDownloading(false);
+        }
+    };
 
     return (
         <SiteCard id="resultsPage">
@@ -55,7 +79,17 @@ export const Response = () => {
                     })}
 
                 </div>
-                <button type="button" className="btn" onClick={() => navigate("/student/examHistory")}>Back to Exam History</button>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                    <button 
+                        type="button" 
+                        className="btn btn-primary" 
+                        onClick={handleDownloadPDF}
+                        disabled={isDownloading}
+                    >
+                        {isDownloading ? 'Generating PDF...' : 'Download PDF Report'}
+                    </button>
+                    <button type="button" className="btn" onClick={() => navigate("/student/examHistory")}>Back to Exam History</button>
+                </div>
             </div>
         </SiteCard>
     )

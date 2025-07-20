@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { SiteCard } from "../../components/SiteCard";
+import { autoGenerateAndSendResultsPDF } from "../../utils/pdf/pdfUtils";
 
 export const TakeExam = () => {
     const { examID } = useParams();
@@ -123,7 +124,22 @@ export const TakeExam = () => {
 
             if (response.ok) {
                 const result = await response.json();
-                alert(`Exam submitted successfully! Your score: ${result.data.score}`);
+                alert(`Exam submitted successfully! Your score: ${result.data.score}\n\nGenerating and sending your results PDF to your email...`);
+                
+                // Automatically generate and send PDF after successful submission
+                try {
+                    const pdfResult = await autoGenerateAndSendResultsPDF(exam, result.data);
+                    if (pdfResult.success) {
+                        alert(`Results PDF has been sent to your email!`);
+                    } else {
+                        console.warn('PDF generation failed:', pdfResult.message);
+                        alert(`Exam submitted successfully, but there was an issue sending the PDF: ${pdfResult.message}`);
+                    }
+                } catch (pdfError) {
+                    console.error('Error generating PDF:', pdfError);
+                    alert('Exam submitted successfully, but there was an issue generating the PDF.');
+                }
+                
                 navigate('/student/examHistory');
             } else {
                 const error = await response.json();
