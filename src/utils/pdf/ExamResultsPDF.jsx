@@ -1,7 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
 
-// Create styles
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
@@ -265,7 +264,6 @@ const ExamResultsPDF = ({ examData, responseData, studentData }) => {
           </View>
         </View>
 
-        {/* Statistics */}
         <View style={styles.statsContainer}>
           <View style={styles.statItem}>
             <Text style={styles.statValue}>{responseData.score || 0}</Text>
@@ -281,7 +279,6 @@ const ExamResultsPDF = ({ examData, responseData, studentData }) => {
           </View>
         </View>
 
-        {/* Questions Analysis */}
         <Text style={styles.sectionTitle}>Detailed Question-wise Analysis</Text>
         
         {responseData.answers && responseData.answers.map((answer, index) => {
@@ -344,7 +341,6 @@ const ExamResultsPDF = ({ examData, responseData, studentData }) => {
           );
         })}
 
-        {/* Footer */}
         <View style={styles.footer}>
           <Text>Generated on {new Date().toLocaleString()}</Text>
           <Text>This is a computer-generated document.</Text>
