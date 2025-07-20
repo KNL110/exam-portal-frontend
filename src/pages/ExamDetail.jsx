@@ -3,7 +3,7 @@ import { RanklistTable } from '../components/RankListTable';
 import { SiteCard } from '../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
 import { MarksChart } from '../components/MarksChart'
-import { useExamData } from '../context/examDataContext'
+import { useExamData } from '../context/ProfessorContext'
 import { useEffect, useState } from 'react'
 
 export const ExamDetail = () => {
