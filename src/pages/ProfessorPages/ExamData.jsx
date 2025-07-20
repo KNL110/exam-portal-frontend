@@ -1,9 +1,9 @@
-import { SiteCard } from '../components/SiteCard'
+import { SiteCard } from '../../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
-import { HistoryCard } from '../components/HistoryCard'
-import { useExamData } from '../context/ProfessorContext'
+import { HistoryCard } from '../../components/HistoryCard'
+import { useExamData } from '../../context/ProfessorContext'
 import { useEffect, useState } from 'react'
-import { examDataApi } from '../api/examDataApi'
+import { examDataApi } from '../../api/examDataApi'
 
 export const ExamData = () => {
     const { responseData } = useExamData();

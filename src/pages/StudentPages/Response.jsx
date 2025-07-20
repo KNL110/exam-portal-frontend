@@ -1,6 +1,6 @@
-import { SiteCard } from '../components/SiteCard'
+import { SiteCard } from '../../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
-import { ResponseCard } from '../components/ResponseCard'
+import { ResponseCard } from '../../components/ResponseCard'
 
 export const Response = () => {
 

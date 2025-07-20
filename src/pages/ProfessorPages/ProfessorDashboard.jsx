@@ -1,4 +1,4 @@
-import { SiteCard } from '../components/SiteCard'
+import { SiteCard } from "../../components/SiteCard";
 import { useNavigate } from 'react-router-dom'
 
 export const ProfessorDashboard = () => {

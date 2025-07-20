@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { RoleCard } from "../components/RoleCard"
-import { SiteCard } from "../components/SiteCard"
+import { RoleCard } from "../../components/RoleCard"
+import { SiteCard } from "../../components/SiteCard"
 import { useNavigate } from "react-router-dom"
 
 export const StudentDashboard = () => {

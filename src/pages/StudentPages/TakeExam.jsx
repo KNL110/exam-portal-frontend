@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { SiteCard } from "../components/SiteCard";
+import { SiteCard } from "../../components/SiteCard";
 
 export const TakeExam = () => {
     const { examID } = useParams();

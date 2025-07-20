@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { QuestionCard } from '../components/ExamQuestion';
-import { SiteCard } from '../components/SiteCard';
+import { QuestionCard } from '../../components/ExamQuestion';
+import { SiteCard } from '../../components/SiteCard';
 import { useNavigate } from 'react-router-dom';
-import { createExamApi } from '../api/createExamApi';
+import { createExamApi } from '../../api/createExamApi';
 
 export const CreateExamPage = () => {
     const initialState = {

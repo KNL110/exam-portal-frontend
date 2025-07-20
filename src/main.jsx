@@ -1,19 +1,25 @@
-import './index.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+//Global CSS
+import './index.css'
+// home page
 import { Home } from './pages/Home.jsx';
-import { StudentDashboard } from './pages/StudentDashboard.jsx';
-import { ProfessorDashboard } from './pages/ProfessorDashboard.jsx';
-import { ExamHistory } from './pages/ExamHistory.jsx';
-import { Response } from './pages/Response.jsx';
+//Login page
 import LoginPage from './pages/Login.jsx';
+//Role based layout
 import { StudentLayout } from './pages/StudentLayout.jsx';
 import { ProfessorLayout } from './pages/ProfessorLayout.jsx';
-import { ExamData } from './pages/ExamData.jsx';
-import { ExamDetail } from './pages/ExamDetail.jsx';
-import { CreateExamPage } from './pages/CreateExam.jsx';
-import { TakeExam } from './pages/TakeExam.jsx';
+//Professor pages import
+import { ProfessorDashboard } from './pages/ProfessorPages/ProfessorDashboard.jsx';
+import { CreateExamPage } from './pages/ProfessorPages/CreateExam.jsx';
+import { ExamData } from './pages/ProfessorPages/ExamData.jsx';
+import { ExamDetail } from './pages/ProfessorPages/ExamDetail.jsx';
+//Student pages import
+import { StudentDashboard } from './pages/StudentPages/StudentDashboard.jsx';
+import { TakeExam } from './pages/StudentPages/TakeExam.jsx';
+import { ExamHistory } from './pages/StudentPages/ExamHistory.jsx';
+import { Response } from './pages/StudentPages/Response.jsx';
 
 const router = createBrowserRouter([
     {
