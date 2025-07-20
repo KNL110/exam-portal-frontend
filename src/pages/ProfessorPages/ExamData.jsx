@@ -56,6 +56,7 @@ export const ExamData = () => {
                     ) : (
                         <div className="card">
                             <p>No exams found. Create an exam to see it here.</p>
+                            <p>or student responses does not exist.</p>
                         </div>
                     )}
                 </div>
