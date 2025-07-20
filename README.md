@@ -1,4 +1,4 @@
-# Goa Testing Agency - Frontend
+# exam-portal - Frontend
 
 A modern React.js frontend for the Goa Testing Agency examination portal, providing an intuitive interface for both students and professors to manage and take exams.
 
