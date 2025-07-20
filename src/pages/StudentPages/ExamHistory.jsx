@@ -1,7 +1,7 @@
 import { SiteCard } from '../../components/SiteCard'
 import { useNavigate } from 'react-router-dom'
 import { HistoryCard } from '../../components/HistoryCard'
-import { useExamData } from '../../context/ProfessorContext'
+import { useExamData } from '../../context/StudentContext'
 import { useState, useEffect } from 'react'
 import { getOneExamDataApi } from '../../api/examDataApi.js'
 
@@ -16,6 +16,7 @@ export const ExamHistory = () => {
         fetchExamDetails();
     }, [studentResponses, examsData]) // eslint-disable-line react-hooks/exhaustive-deps
     
+    console.log(studentResponses);
     const fetchExamDetails = async () => {
         if (!studentResponses || studentResponses.length === 0) {
             setLoading(false);

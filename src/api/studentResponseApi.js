@@ -9,12 +9,12 @@ export const getStudentResponsesApi = async () => {
             'Content-Type': 'application/json'
         },
     });
-
     const result = await response.json();
 
     if (!response.ok) {
         throw new Error(result.message || `HTTP error! status: ${response.status}`);
     }
+    
     return result.data;
 }
 
