@@ -3,7 +3,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { examDataApi } from '../api/examDataApi.js';
 import { examResultApi } from '../api/examResultApi.js';
-import { getStudentResponsesApi } from '../api/studentResponseApi.js'
 
 const ProfessorContext = createContext();
 
@@ -12,7 +11,6 @@ export const useExamData = () => useContext(ProfessorContext);
 export const ExamDataProvider = ({ children }) => {
     const [examsData, setExamData] = useState([]);
     const [responseData, setResponseData] = useState([]);
-    const [studentResponses, setStudentResponses] = useState([]);
 
     useEffect(() => {
         fetchExams();
@@ -31,11 +29,7 @@ export const ExamDataProvider = ({ children }) => {
     const fetchResponses = async () => {
         try {
             const data = await examResultApi();
-            const response = await getStudentResponsesApi();
             setResponseData(data);
-            setStudentResponses(response);
-            console.log(data);
-
         } catch (error) {
             console.error('Error fetching responses:', error);
         }
@@ -45,7 +39,6 @@ export const ExamDataProvider = ({ children }) => {
         <ProfessorContext.Provider value={{
             examsData,
             responseData,
-            studentResponses
         }}>
             {children}
         </ProfessorContext.Provider>

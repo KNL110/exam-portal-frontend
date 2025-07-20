@@ -3,18 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import { HistoryCard } from '../../components/HistoryCard'
 import { useExamData } from '../../context/ProfessorContext'
 import { useEffect, useState } from 'react'
-import { examDataApi } from '../../api/examDataApi'
 
 export const ExamData = () => {
-    const { responseData } = useExamData();
+    const { responseData, examsData } = useExamData();
     const [loading, setLoading] = useState(true);
-    const [examsData, setExamData] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (examsData && responseData) {
             setLoading(false);
-            setExamData(examDataApi());
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

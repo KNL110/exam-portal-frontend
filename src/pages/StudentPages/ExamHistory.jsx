@@ -16,7 +16,6 @@ export const ExamHistory = () => {
         fetchExamDetails();
     }, [studentResponses, examsData]) // eslint-disable-line react-hooks/exhaustive-deps
     
-    console.log(studentResponses);
     const fetchExamDetails = async () => {
         if (!studentResponses || studentResponses.length === 0) {
             setLoading(false);
