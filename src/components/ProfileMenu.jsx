@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { logoutApi } from "../api/logoutApi";
 
 export const ProfileMenu = ({role}) => {
     const [showMenu, setShowMenu] = useState(false);
@@ -13,49 +14,8 @@ export const ProfileMenu = ({role}) => {
 
     const handleLogout = async () => {
         setIsLoading(true);
-        
-        try {
-            const token = localStorage.getItem('accessToken');
-            
-            if (!token) {
-                localStorage.removeItem('accessToken');
-                sessionStorage.clear();
-                navigate("/");
-                return;
-            }
-
-            const logoutEndpoint = role === 'candidate' 
-                ? '/api/v1/candidate/logout' 
-                : '/api/v1/professor/logout';
-            
-            
-            const response = await fetch(logoutEndpoint, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include' 
-            });
-            
-            const data = await response.json();
-            
-            if (!response.ok) {
-                console.error('Logout failed:', data.message);
-            }
-            
-            console.log('Logout successful:', data.message);
-            
-        } catch (error) {
-            console.error('Logout error:', error);
-        } finally {
-            localStorage.removeItem('accessToken');
-            sessionStorage.clear();
-            localStorage.removeItem('selectedRole');
-            sessionStorage.removeItem('selectedRole');
-            setIsLoading(false);
-            navigate("/");
-        }
+        logoutApi(role,navigate);
+        setIsLoading(false);
     };
 
     return (
