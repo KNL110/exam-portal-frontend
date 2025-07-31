@@ -31,13 +31,12 @@ export async function logoutApi(role, navigate) {
         localStorage.clear();
         console.log('Logout successful:', data.message);
 
-    } catch (error) {
-        console.error('Logout error:', error.message);
-    } finally {
         localStorage.removeItem('accessToken');
         sessionStorage.clear();
         localStorage.removeItem('selectedRole');
         sessionStorage.removeItem('selectedRole');
         navigate("/");
+    } catch (error) {
+        console.error('Logout error:', error.message);
     }
 }
